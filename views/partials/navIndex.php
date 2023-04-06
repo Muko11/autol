@@ -36,8 +36,10 @@ include('./modals/cierraSesion.php');
                 <li class="nav-item dropdown toogle-usuario">
                     <a class="navbar-brand nav-link dropdown-toggle me-0" href="#" id="dropdownMenu" data-bs-toggle="dropdown"><i class="fa-solid fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu">
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalInicioSesion">Iniciar sesión</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro">Crear cuenta</a></li>
+                        <!-- <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalInicioSesion">Iniciar sesión</a></li> -->
+                        <li><a class="dropdown-item" href="login.php">Iniciar sesión</a></li>
+                        <!-- <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro">Crear cuenta</a></li> -->
+                        <li><a class="dropdown-item" href="singup.php">Crear cuenta</a></li>
                         <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalCerrarSesion">Cerrar sesión</a></li>
                         <li><a class="dropdown-item" href="#">Mi cuenta</a></li>
                         <li><a class="dropdown-item" href="profesor.php">Soy profesor</a></li>

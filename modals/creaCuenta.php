@@ -1,38 +1,3 @@
-<?php
-require_once "config/config.php";
-
-// Obtener los valores de los campos del formulario
-$nombre = $_POST['nombre'];
-$apellidos = $_POST['apellidos'];
-$correo = $_POST['correo'];
-$password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-$rol = $_POST['rol'];
-
-
-if (!empty($nombre) && !empty($apellidos) && !empty($correo) && !empty($password) && isset($rol) && isset($_POST["registra"])) {
-
-    try {
-        $bd->beginTransaction();
-        $stmt = $bd->prepare("INSERT INTO usuarios (nombre, apellidos, correo, password, rol) VALUES (:nombre, :apellidos, :correo, :password, :rol)");
-        $stmt->bindParam(':nombre', $nombre);
-        $stmt->bindParam(':apellidos', $apellidos);
-        $stmt->bindParam(':correo', $correo);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':rol', $rol);
-        $stmt->execute();
-
-        // Confirmación de la transacción para la tabla de clientes
-        $bd->commit();
-        header("Location: index.php");
-    } catch (Exception $e) {
-        // Deshacer la transacción en caso de error
-        $bd->rollBack();
-        throw $e;
-    }
-}
-
-?>
-
 <div class="modal fade" id="modalRegistro" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content p-3">

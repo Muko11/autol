@@ -1,0 +1,8 @@
+@import url(general.css);
+
+.formulario {
+    margin-top: 5%;
+    border-left: 5px solid #5499C7;
+    background-color: aliceblue;
+    padding: 10px 18px;
+}
