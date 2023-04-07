@@ -36,8 +36,8 @@ if (isset($_GET['registroExitoso'])) {
 
     <div class="container formulario">
         <p class="fs-3">Crear cuenta</p>
-        <p class="text-muted">Crea una cuenta gratuita para acceder a nuestras
-            oportunidades.</p>
+<!--         <p class="text-muted">Crea una cuenta gratuita para acceder a nuestras
+            oportunidades.</p> -->
         <a href="login.php">¿Ya tienes una cuenta? Inicia
             sesión</a>
         <form id="formulario-registro" method="POST" action="forms/procesarSingup.php">

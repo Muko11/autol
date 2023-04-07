@@ -1,9 +1,31 @@
-<?php 
+<?php
 include('./modals/inicioSesion.php');
 include('./modals/creaCuenta.php');
 include('./modals/miCuenta.php');
 include('./modals/cierraSesion.php');
 ?>
+
+<head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Obtener el elemento 'a'
+            var navbarBrand = document.querySelector(".navbar-brand");
+
+            // Obtener el nombre de usuario de la sesión
+            var nombreUsuario = "<?php echo $_SESSION['sesion']['nombre']; ?>";
+
+            // Actualizar el contenido del elemento 'a'
+            navbarBrand.innerHTML = nombreUsuario;
+
+            // Poner un subrayado al elemento
+            navbarBrand.style.textDecoration = "underline";
+
+        });
+    </script>
+
+</head>
+
 
 <nav id="nav-scroll" class="navbar navbar-expand-lg fixed-top bg-dark">
     <div class="container-fluid">
@@ -34,19 +56,30 @@ include('./modals/cierraSesion.php');
             </div>
             <ul class="navbar-nav dropstart">
                 <li class="nav-item dropdown toogle-usuario">
-                    <a class="navbar-brand nav-link dropdown-toggle me-0" href="#" id="dropdownMenu" data-bs-toggle="dropdown"><i class="fa-solid fa-user fa-lg"></i></a>
+                    <a id="perfil" class="navbar-brand nav-link dropdown-toggle me-0" href="#" id="dropdownMenu" data-bs-toggle="dropdown"><i class="fa-solid fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu">
-                        <!-- <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalInicioSesion">Iniciar sesión</a></li> -->
-                        <li><a class="dropdown-item" href="login.php">Iniciar sesión</a></li>
-                        <!-- <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalRegistro">Crear cuenta</a></li> -->
-                        <li><a class="dropdown-item" href="singup.php">Crear cuenta</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalCerrarSesion">Cerrar sesión</a></li>
-                        <li><a class="dropdown-item" href="#">Mi cuenta</a></li>
-                        <li><a class="dropdown-item" href="profesor.php">Soy profesor</a></li>
-                        <li><a class="dropdown-item" href="alumno.php">Soy alumno</a></li>
+                        <?php if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
+                            if ($_SESSION['sesion']['rol'] == "profesor") { ?>
+                                <li><a class="dropdown-item" href="profesor.php">Soy profesor</a></li>
+                            <?php
+                            } else {
+                            ?>
+                                <li><a class="dropdown-item" href="alumno.php">Soy alumno</a></li>
+                            <?php
+                            }
+                            ?>
+                            <li><a class="dropdown-item" href="account.php">Mi cuenta</a></li>
+                            <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
+                            
+                        <?php } else { // Si la sesión no está iniciada 
+                        ?>
+                            <li><a class="dropdown-item" href="login.php">Iniciar sesión</a></li>
+                            <li><a class="dropdown-item" href="singup.php">Crear cuenta</a></li>
+                        <?php } ?>
                     </ul>
                 </li>
             </ul>
+
         </div>
     </div>
 </nav>

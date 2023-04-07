@@ -12,9 +12,16 @@ if (!empty($correo) && !empty($password) && isset($_POST['login'])) {
     $usuario = $stmt->fetch();
 
     if (!empty($usuario) && password_verify($password, $usuario['password'])) {
+        /* session_start();
+        $_SESSION['sesion'] = $usuario['apellidos']; */
         session_start();
-        $_SESSION['sesion'] = $usuario['nombre'];
-
+        $_SESSION['sesion'] = array(
+            'id_usuario' => $usuario['id_usuario'],
+            'nombre' => $usuario['nombre'],
+            'apellidos' => $usuario['apellidos'],
+            'correo' => $usuario['correo'],
+            'rol' => $usuario['rol']
+        );
         header("Location: ../login.php?loginExitoso=true");
         echo "Login correcto";
     } else {

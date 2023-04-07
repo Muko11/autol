@@ -1,5 +1,6 @@
 <?php
 require_once "config/config.php";
+session_start();
 ?>
 
 <html lang="es">
@@ -48,7 +49,7 @@ require_once "config/config.php";
         </div>
 
 
-        
+
         <div id="oportunidades"></div>
         <br>
         <br>
@@ -98,5 +99,18 @@ require_once "config/config.php";
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
+<?php
+
+/* if (isset($_SESSION['sesion']) && is_array($_SESSION['sesion'])) {
+    echo "La sesión está iniciada:";
+    echo "<pre>";
+    print_r($_SESSION['sesion']);
+    echo "</pre>";
+} else {
+    echo "La sesión no está iniciada";
+}
+ */
+
+?>
 
 </html>

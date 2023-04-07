@@ -1,8 +1,68 @@
 @import url(general.css);
 
+body {
+    background-color: #f5f5f5;
+}
+
+.container.formulario {
+    background-color: white;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+    padding: 40px;
+    margin-top: 80px;
+}
+
+.formulario p {
+    margin-bottom: 20px;
+}
+
+.formulario a {
+    color: #0275d8;
+}
+
+.formulario form {
+    margin-top: 20px;
+}
+
+.formulario .form-floating label {
+    color: #727272;
+}
+
+.formulario .form-control {
+    border-color: #ddd;
+}
+
+.formulario .form-control:focus {
+    box-shadow: none;
+    border-color: #0275d8;
+}
+
+.boton {
+    background-color: #0275d8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+}
+
+.boton:hover {
+    background-color: #025aa5;
+    color: white;
+    text-decoration: none;
+}
+
 .formulario {
-    margin-top: 5%;
-    border-left: 5px solid #5499C7;
-    background-color: aliceblue;
-    padding: 10px 18px;
+    max-width: 600px;
+    margin: 0 auto;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.formulario p {
+    margin-bottom: 0.5rem;
+}
+
+.formulario a {
+    color: #007bff;
 }
