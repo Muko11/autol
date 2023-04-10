@@ -1,8 +1,5 @@
 <?php
-include('./modals/inicioSesion.php');
-include('./modals/creaCuenta.php');
-include('./modals/miCuenta.php');
-include('./modals/cierraSesion.php');
+
 ?>
 
 <head>
@@ -46,9 +43,20 @@ include('./modals/cierraSesion.php');
                     <div class="nav-item">
                         <a class="nav-link" href="#servicios">Servicios</a>
                     </div>
-                    <div class="nav-item">
-                        <a class="nav-link" href="#oportunidades">Crear autoescuela</a>
-                    </div>
+
+                    <?php
+                    if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
+                        if ($_SESSION['sesion']['rol'] == "profesor") {
+                    ?>
+                            <div class="nav-item">
+                                <a class="nav-link" href="#oportunidades">Crear autoescuela</a>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
+
+
                     <div class="nav-item">
                         <a class="nav-link" href="#contacto">Contacto</a>
                     </div>
@@ -70,7 +78,7 @@ include('./modals/cierraSesion.php');
                             ?>
                             <li><a class="dropdown-item" href="account.php">Mi cuenta</a></li>
                             <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
-                            
+
                         <?php } else { // Si la sesión no está iniciada 
                         ?>
                             <li><a class="dropdown-item" href="login.php">Iniciar sesión</a></li>

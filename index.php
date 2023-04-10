@@ -26,7 +26,16 @@ session_start();
                 <h1 id="inicio">AutoL - Organiza tu autoescuela</h1>
                 <h2>Software para la gestión de autoescuelas. ¡Comienza ahora!</h2>
                 <br>
-                <a href="#oportunidades" class="boton btn-portada">Comenzar</a>
+                <?php
+                if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
+                    if ($_SESSION['sesion']['rol'] == "profesor") {
+                ?>
+                        <a href="#oportunidades" class="boton btn-portada">Comenzar</a>
+                <?php
+                    }
+                }
+                ?>
+
             </div>
         </div>
 
@@ -54,23 +63,32 @@ session_start();
         <br>
         <br>
 
+        <?php
+        if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
+            if ($_SESSION['sesion']['rol'] == "profesor") {
+        ?>
+                <div class="container-fluid px-4 py-5 contenedor-autoescuela">
 
-        <div class="container-fluid px-4 py-5 contenedor-autoescuela">
+                    <h3 class="text-center m-3">CREA TU AUTOESCUELA</h3>
+                    <div class="container-fluid px-md-5 px-sm-2 mt-4">
+                        <div class="row row-cols row-cols-md-2 align-items-center">
+                            <div class="d-flex justify-content-center mb-4">
+                                <img class="w-50" src="public/imagenes/autoescuela.png" alt="Autoescuela">
+                            </div>
 
-            <h3 class="text-center m-3">CREA TU AUTOESCUELA</h3>
-            <div class="container-fluid px-md-5 px-sm-2 mt-4">
-                <div class="row row-cols row-cols-md-2 align-items-center">
-                    <div class="d-flex justify-content-center mb-4">
-                        <img class="w-50" src="public/imagenes/autoescuela.png" alt="Autoescuela">
+                            <?php
+                            include('./forms/registraAutoescuela.php');
+                            ?>
+                        </div>
                     </div>
 
-                    <?php
-                    include('./forms/registraAutoescuela.php');
-                    ?>
                 </div>
-            </div>
+        <?php
+            }
+        }
 
-        </div>
+        ?>
+
 
 
 
