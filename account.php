@@ -41,19 +41,12 @@ session_start();
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title"><?php echo $_SESSION['sesion']['nombre'] . ' ' . $_SESSION['sesion']['apellidos']; ?></h5>
-                <h6 class="card-subtitle mb-2 text-muted"><?php echo $_SESSION['sesion']['rol']; ?></h6>
-                <p class="card-text">Correo electrónico: <?php echo $_SESSION['sesion']['correo']; ?></p>
+                <p class="card-text"><b>Tipo de cuenta:</b> <?php echo $_SESSION['sesion']['rol']; ?></p>
+                <p class="card-text"><b>Correo electrónico:</b> <?php echo $_SESSION['sesion']['correo']; ?></p>
             </div>
         </div>
 
     </div>
-
-
-
-
-
-
-
 
 </body>
 

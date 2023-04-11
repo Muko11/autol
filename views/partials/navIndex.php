@@ -47,14 +47,28 @@
                     <?php
                     if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
                         if ($_SESSION['sesion']['rol'] == "profesor") {
-                    ?>
-                            <div class="nav-item">
-                                <a class="nav-link" href="#oportunidades">Crear autoescuela</a>
-                            </div>
-                    <?php
+
+                            // Obtener el ID del profesor desde la variable $_SESSION
+                            $id_profesor = $_SESSION['sesion']['id_usuario'];
+
+                            // Realizar la consulta para verificar si el id_profesor existe en la tabla profesores
+                            $stmt = $bd->prepare("SELECT * FROM profesores WHERE id_profesor = :id_profesor");
+                            $stmt->bindParam(":id_profesor", $id_profesor);
+                            $stmt->execute();
+                            $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                            // Ocultar el div y el enlace a "Crear autoescuela" si el id_profesor existe en la tabla profesores
+                            if ($resultado) {
+                                // no se muestra nada
+                            } else { ?>
+                                <div class="nav-item">
+                                    <a class="nav-link" href="#oportunidades">Crear autoescuela</a>
+                                </div>
+                    <?php }
                         }
                     }
                     ?>
+
 
 
                     <div class="nav-item">
@@ -66,24 +80,59 @@
                 <li class="nav-item dropdown toogle-usuario">
                     <a id="perfil" class="navbar-brand nav-link dropdown-toggle me-0" href="#" id="dropdownMenu" data-bs-toggle="dropdown"><i class="fa-solid fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu">
-                        <?php if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
-                            if ($_SESSION['sesion']['rol'] == "profesor") { ?>
-                                <li><a class="dropdown-item" href="profesor.php">Soy profesor</a></li>
-                            <?php
-                            } else {
-                            ?>
-                                <li><a class="dropdown-item" href="alumno.php">Soy alumno</a></li>
-                            <?php
-                            }
-                            ?>
-                            <li><a class="dropdown-item" href="account.php">Mi cuenta</a></li>
-                            <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
 
+                        <?php
+                        if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
+                            if ($_SESSION['sesion']['rol'] == "profesor") {
+
+                                // Obtener el ID del profesor desde la variable $_SESSION
+                                $id_profesor = $_SESSION['sesion']['id_usuario'];
+
+                                // Realizar la consulta para verificar si el id_profesor existe en la tabla profesores
+                                $stmt = $bd->prepare("SELECT * FROM profesores WHERE id_profesor = :id_profesor");
+                                $stmt->bindParam(":id_profesor", $id_profesor);
+                                $stmt->execute();
+                                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                                // Mostrar el enlace a profesor.php si el id_profesor existe en la tabla profesores
+                                if ($resultado) { ?>
+                                    <li><a class="dropdown-item" href="profesor.php">Soy profesor</a></li>
+                                <?php } else { ?>
+                                    <li><a class="dropdown-item" href="#">Sin autoescuela</a></li>
+                                <?php } ?>
+
+                                <li><a class="dropdown-item" href="account.php">Mi cuenta</a></li>
+                                <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
+
+                                <?php } else if ($_SESSION['sesion']['rol'] == "alumno") {
+
+                                // Obtener el ID del alumno desde la variable $_SESSION
+                                $id_alumno = $_SESSION['sesion']['id_usuario'];
+
+                                // Realizar la consulta para verificar si el id_alumno existe en la tabla alumnos
+                                $stmt = $bd->prepare("SELECT * FROM alumnos WHERE id_alumno = :id_alumno");
+                                $stmt->bindParam(":id_alumno", $id_alumno);
+                                $stmt->execute();
+                                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                                // Mostrar el enlace a alumno.php si el id_alumno existe en la tabla alumnos
+                                if ($resultado) { ?>
+                                    <li><a class="dropdown-item" href="alumno.php">Soy alumno</a></li>
+                                <?php } else { ?>
+                                    <li><a class="dropdown-item" href="#">Sin autoescuela</a></li>
+                                <?php } ?>
+
+                                <li><a class="dropdown-item" href="account.php">Mi cuenta</a></li>
+                                <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
+
+                            <?php } ?>
                         <?php } else { // Si la sesión no está iniciada 
                         ?>
                             <li><a class="dropdown-item" href="login.php">Iniciar sesión</a></li>
                             <li><a class="dropdown-item" href="singup.php">Crear cuenta</a></li>
                         <?php } ?>
+
+
                     </ul>
                 </li>
             </ul>

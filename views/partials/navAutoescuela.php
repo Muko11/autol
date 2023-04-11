@@ -23,17 +23,6 @@
                     <div class="nav-item">
                         <a class="nav-link" href="index.php#servicios">Servicios</a>
                     </div>
-                    <?php
-                    /*                     if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
-                        if ($_SESSION['sesion']['rol'] == "profesor") { */
-                    ?>
-                    <!--                             <div class="nav-item">
-                                <a class="nav-link" href="index.php#oportunidades">Crear autoescuela</a>
-                            </div> -->
-                    <?php
-                    /*                         }
-                    } */
-                    ?>
                     <div class="nav-item">
                         <a class="nav-link" href="index.php#contacto">Contacto</a>
                     </div>
@@ -43,9 +32,9 @@
                 <li class="nav-item dropdown toogle-usuario">
                     <a class="navbar-brand nav-link dropdown-toggle me-0" href="#" id="dropdownMenu" data-bs-toggle="dropdown"><i class="fa-solid fa-user fa-lg"></i></a>
                     <ul class="dropdown-menu bg-dark" aria-labelledby="dropdownMenu">
-                        <li><a class="dropdown-item" href="#">Mi cuenta</a></li>
+                        <li><a class="dropdown-item" href="account.php">Mi cuenta</a></li>
                         <li><a class="dropdown-item" href="#">Salir</a></li>
-                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalCerrarSesion">Cerrar sesión</a></li>
+                        <li><a class="dropdown-item" href="logout.php">Cerrar sesión</a></li>
                     </ul>
                 </li>
             </ul>

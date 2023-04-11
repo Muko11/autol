@@ -26,12 +26,25 @@ session_start();
                 <h1 id="inicio">AutoL - Organiza tu autoescuela</h1>
                 <h2>Software para la gestión de autoescuelas. ¡Comienza ahora!</h2>
                 <br>
+
+
                 <?php
                 if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
                     if ($_SESSION['sesion']['rol'] == "profesor") {
-                ?>
-                        <a href="#oportunidades" class="boton btn-portada">Comenzar</a>
-                <?php
+
+                        // Obtener el ID del profesor desde la variable $_SESSION
+                        $id_profesor = $_SESSION['sesion']['id_usuario'];
+
+                        // Realizar la consulta para verificar si el id_profesor existe en la tabla profesores
+                        $stmt = $bd->prepare("SELECT * FROM profesores WHERE id_profesor = :id_profesor");
+                        $stmt->bindParam(":id_profesor", $id_profesor);
+                        $stmt->execute();
+                        $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        if ($resultado) {
+                        } else { ?>
+                            <a href="#oportunidades" class="boton btn-portada">Comenzar</a>
+                <?php }
                     }
                 }
                 ?>
@@ -66,28 +79,37 @@ session_start();
         <?php
         if (isset($_SESSION['sesion'])) { // Si la sesión está iniciada 
             if ($_SESSION['sesion']['rol'] == "profesor") {
-        ?>
-                <div class="container-fluid px-4 py-5 contenedor-autoescuela">
 
-                    <h3 class="text-center m-3">CREA TU AUTOESCUELA</h3>
-                    <div class="container-fluid px-md-5 px-sm-2 mt-4">
-                        <div class="row row-cols row-cols-md-2 align-items-center">
-                            <div class="d-flex justify-content-center mb-4">
-                                <img class="w-50" src="public/imagenes/autoescuela.png" alt="Autoescuela">
+                // Obtener el ID del profesor desde la variable $_SESSION
+                $id_profesor = $_SESSION['sesion']['id_usuario'];
+
+                // Realizar la consulta para verificar si el id_profesor existe en la tabla profesores
+                $stmt = $bd->prepare("SELECT * FROM profesores WHERE id_profesor = :id_profesor");
+                $stmt->bindParam(":id_profesor", $id_profesor);
+                $stmt->execute();
+                $resultado = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                // Ocultar el div si el id_profesor existe en la tabla profesores
+                if (!$resultado) { ?>
+                    <div class="container-fluid px-4 py-5 contenedor-autoescuela">
+
+                        <h3 class="text-center m-3">CREA TU AUTOESCUELA</h3>
+                        <div class="container-fluid px-md-5 px-sm-2 mt-4">
+                            <div class="row row-cols row-cols-md-2 align-items-center">
+                                <div class="d-flex justify-content-center mb-4">
+                                    <img class="w-50" src="public/imagenes/autoescuela.png" alt="Autoescuela">
+                                </div>
+
+                                <?php
+                                include('registraAutoescuela.php');
+                                ?>
                             </div>
-
-                            <?php
-                            include('./forms/registraAutoescuela.php');
-                            ?>
                         </div>
+
                     </div>
-
-                </div>
-        <?php
+        <?php }
             }
-        }
-
-        ?>
+        } ?>
 
 
 

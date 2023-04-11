@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 04-04-2023 a las 13:22:13
+-- Tiempo de generación: 11-04-2023 a las 15:22:35
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 7.4.33
 
@@ -31,6 +31,7 @@ USE `autol`;
 --
 
 CREATE TABLE `administra` (
+  `ida` int(11) NOT NULL,
   `administrador` varchar(2) NOT NULL,
   `id_profesor` int(11) NOT NULL,
   `id_autoescuela` int(11) NOT NULL
@@ -43,6 +44,7 @@ CREATE TABLE `administra` (
 --
 
 CREATE TABLE `alumnos` (
+  `ida` int(11) NOT NULL,
   `id_alumno` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -96,6 +98,7 @@ CREATE TABLE `practicas` (
 --
 
 CREATE TABLE `profesores` (
+  `idp` int(11) NOT NULL,
   `id_profesor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -106,6 +109,7 @@ CREATE TABLE `profesores` (
 --
 
 CREATE TABLE `recibe` (
+  `idr` int(11) NOT NULL,
   `id_alumno` int(11) NOT NULL,
   `id_comunicado` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -133,6 +137,7 @@ CREATE TABLE `usuarios` (
 -- Indices de la tabla `administra`
 --
 ALTER TABLE `administra`
+  ADD PRIMARY KEY (`ida`),
   ADD KEY `id_profesor` (`id_profesor`),
   ADD KEY `id_autoescuela` (`id_autoescuela`);
 
@@ -140,6 +145,7 @@ ALTER TABLE `administra`
 -- Indices de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
+  ADD PRIMARY KEY (`ida`),
   ADD KEY `id_alumno` (`id_alumno`);
 
 --
@@ -169,13 +175,14 @@ ALTER TABLE `practicas`
 -- Indices de la tabla `profesores`
 --
 ALTER TABLE `profesores`
+  ADD PRIMARY KEY (`idp`),
   ADD KEY `id_profesor` (`id_profesor`);
 
 --
 -- Indices de la tabla `recibe`
 --
 ALTER TABLE `recibe`
-  ADD PRIMARY KEY (`id_alumno`,`id_comunicado`),
+  ADD PRIMARY KEY (`idr`),
   ADD KEY `id_alumno` (`id_alumno`),
   ADD KEY `id_comunicado` (`id_comunicado`);
 
@@ -190,6 +197,18 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `administra`
+--
+ALTER TABLE `administra`
+  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `alumnos`
+--
+ALTER TABLE `alumnos`
+  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `autoescuelas`
 --
 ALTER TABLE `autoescuelas`
@@ -200,6 +219,18 @@ ALTER TABLE `autoescuelas`
 --
 ALTER TABLE `comunicados`
   MODIFY `id_comunicado` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `profesores`
+--
+ALTER TABLE `profesores`
+  MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `recibe`
+--
+ALTER TABLE `recibe`
+  MODIFY `idr` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`

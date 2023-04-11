@@ -34,7 +34,7 @@ if (isset($_GET['loginExitoso'])) {
 
     <div class="container formulario">
         <p class="fs-3">Iniciar sesión</p>
-<!--         <p class="text-muted">Inicia sesión con tu cuenta para continuar disfrutando de nuestras
+        <!--         <p class="text-muted">Inicia sesión con tu cuenta para continuar disfrutando de nuestras
             oportunidades</p> -->
         <a href="singup.php">¿No tienes cuenta? Crea una
             cuenta</a>
