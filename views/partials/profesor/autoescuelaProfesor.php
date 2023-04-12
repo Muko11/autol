@@ -4,7 +4,9 @@ if (isset($_SESSION['sesion'])) {
     $id_profesor = $_SESSION['sesion']['id_usuario'];
 
     // Obtener datos de la autoescuela
-    $stmt = $bd->prepare("SELECT * FROM autoescuelas WHERE id_profesor = :id_profesor");
+    $stmt = $bd->prepare("SELECT p.id_autoescuela, a.nombre, a.telefono, a.precio_practica FROM profesores p
+                            JOIN autoescuelas a ON a.id_autoescuela = p.id_autoescuela
+                            WHERE p.id_profesor = :id_profesor");
     $stmt->bindParam(":id_profesor", $id_profesor);
     $stmt->execute();
     $autoescuela = $stmt->fetch();
@@ -24,7 +26,7 @@ if (isset($_SESSION['sesion'])) {
         </div>
         <div class="mb-4">
             <label for="practicaAutoescuela" class="fw-bold mb-2">Precio por clase práctica</label>
-            <input type="text" class="form-control" id="practicaAutoescuela" placeholder="Precio por clase práctica" value="<?php echo isset($autoescuela) ? $autoescuela['precio_clase'] : ''; ?>" step=".01">
+            <input type="text" class="form-control" id="practicaAutoescuela" placeholder="Precio por clase práctica" value="<?php echo isset($autoescuela) ? $autoescuela['precio_practica'] : ''; ?>" step=".01">
         </div>
     </div>
 

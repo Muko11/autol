@@ -27,12 +27,11 @@ USE `autol`;
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `administra`
+-- Estructura de tabla para la tabla `administradores`
 --
 
-CREATE TABLE `administra` (
-  `ida` int(11) NOT NULL,
-  `administrador` varchar(2) NOT NULL,
+CREATE TABLE `administradores` (
+  `id_administrador` int(11) NOT NULL,
   `id_profesor` int(11) NOT NULL,
   `id_autoescuela` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -45,7 +44,8 @@ CREATE TABLE `administra` (
 
 CREATE TABLE `alumnos` (
   `ida` int(11) NOT NULL,
-  `id_alumno` int(11) NOT NULL
+  `id_alumno` int(11) NOT NULL,
+  `id_autoescuela` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -58,9 +58,7 @@ CREATE TABLE `autoescuelas` (
   `id_autoescuela` int(11) NOT NULL,
   `nombre` varchar(255) NOT NULL,
   `telefono` varchar(20) NOT NULL,
-  `precio_practica` float NOT NULL,
-  `id_profesor` int(11) NOT NULL,
-  `id_alumno` int(11) NOT NULL
+  `precio_practica` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -74,7 +72,7 @@ CREATE TABLE `comunicados` (
   `titulo` varchar(255) NOT NULL,
   `mensaje` text NOT NULL,
   `fecha` date NOT NULL,
-  `id_profesor` int(11) NOT NULL
+  `id_administrador` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -84,11 +82,11 @@ CREATE TABLE `comunicados` (
 --
 
 CREATE TABLE `practicas` (
-  `hora` time NOT NULL,
+  `id_practica` int(11) NOT NULL,
   `fecha` date NOT NULL,
+  `hora` time NOT NULL,
   `tipo` varchar(10) NOT NULL,
-  `id_profesor` int(11) NOT NULL,
-  `id_alumno` int(11) NOT NULL
+  `id_profesor` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -99,19 +97,21 @@ CREATE TABLE `practicas` (
 
 CREATE TABLE `profesores` (
   `idp` int(11) NOT NULL,
-  `id_profesor` int(11) NOT NULL
+  `id_profesor` int(11) NOT NULL,
+  `id_autoescuela` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `recibe`
+-- Estructura de tabla para la tabla `reservas`
 --
 
-CREATE TABLE `recibe` (
-  `idr` int(11) NOT NULL,
+CREATE TABLE `reservas` (
+  `id_reserva` int(11) NOT NULL,
   `id_alumno` int(11) NOT NULL,
-  `id_comunicado` int(11) NOT NULL
+  `id_practica` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -134,10 +134,10 @@ CREATE TABLE `usuarios` (
 --
 
 --
--- Indices de la tabla `administra`
+-- Indices de la tabla `administradores`
 --
-ALTER TABLE `administra`
-  ADD PRIMARY KEY (`ida`),
+ALTER TABLE `administradores`
+  ADD PRIMARY KEY (`id_administrador`),
   ADD KEY `id_profesor` (`id_profesor`),
   ADD KEY `id_autoescuela` (`id_autoescuela`);
 
@@ -146,45 +146,45 @@ ALTER TABLE `administra`
 --
 ALTER TABLE `alumnos`
   ADD PRIMARY KEY (`ida`),
-  ADD KEY `id_alumno` (`id_alumno`);
+  ADD KEY `id_alumno` (`id_alumno`),
+  ADD KEY `id_autoescuela` (`id_autoescuela`);
 
 --
 -- Indices de la tabla `autoescuelas`
 --
 ALTER TABLE `autoescuelas`
-  ADD PRIMARY KEY (`id_autoescuela`),
-  ADD KEY `id_profesor` (`id_profesor`),
-  ADD KEY `id_alumno` (`id_alumno`);
+  ADD PRIMARY KEY (`id_autoescuela`);
 
 --
 -- Indices de la tabla `comunicados`
 --
 ALTER TABLE `comunicados`
   ADD PRIMARY KEY (`id_comunicado`),
-  ADD KEY `id_profesor` (`id_profesor`);
+  ADD KEY `id_administrador` (`id_administrador`);
 
 --
 -- Indices de la tabla `practicas`
 --
 ALTER TABLE `practicas`
-  ADD PRIMARY KEY (`hora`,`fecha`,`tipo`,`id_profesor`,`id_alumno`),
-  ADD KEY `id_profesor` (`id_profesor`),
-  ADD KEY `id_aulumno` (`id_alumno`);
+  ADD PRIMARY KEY (`id_practica`),
+  ADD KEY `id_profesor` (`id_profesor`);
 
 --
 -- Indices de la tabla `profesores`
 --
 ALTER TABLE `profesores`
   ADD PRIMARY KEY (`idp`),
-  ADD KEY `id_profesor` (`id_profesor`);
+  ADD KEY `id_profesor` (`id_profesor`),
+  ADD KEY `id_autoescuela` (`id_autoescuela`);
 
 --
--- Indices de la tabla `recibe`
+-- Indices de la tabla `reservas`
 --
-ALTER TABLE `recibe`
-  ADD PRIMARY KEY (`idr`),
+ALTER TABLE `reservas`
+  ADD PRIMARY KEY (`id_reserva`),
   ADD KEY `id_alumno` (`id_alumno`),
-  ADD KEY `id_comunicado` (`id_comunicado`);
+  ADD KEY `id_practica` (`id_practica`);
+
 
 --
 -- Indices de la tabla `usuarios`
@@ -197,10 +197,10 @@ ALTER TABLE `usuarios`
 --
 
 --
--- AUTO_INCREMENT de la tabla `administra`
+-- AUTO_INCREMENT de la tabla `administradores`
 --
-ALTER TABLE `administra`
-  MODIFY `ida` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `administradores`
+  MODIFY `id_administrador` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `alumnos`
@@ -227,10 +227,10 @@ ALTER TABLE `profesores`
   MODIFY `idp` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de la tabla `recibe`
+-- AUTO_INCREMENT de la tabla `reservas`
 --
-ALTER TABLE `recibe`
-  MODIFY `idr` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `reservas`
+  MODIFY `id_reserva` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
@@ -243,44 +243,44 @@ ALTER TABLE `usuarios`
 --
 
 --
--- Filtros para la tabla `administra`
+-- Filtros para la tabla `administradores`
 --
-ALTER TABLE `administra`
-  ADD CONSTRAINT `administra_ibfk_1` FOREIGN KEY (`id_autoescuela`) REFERENCES `autoescuelas` (`id_autoescuela`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `administra_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`);
+ALTER TABLE `administradores`
+  ADD CONSTRAINT `administradores_ibfk_1` FOREIGN KEY (`id_autoescuela`) REFERENCES `autoescuelas` (`id_autoescuela`),
+  ADD CONSTRAINT `administradores_ibfk_2` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`);
 
 --
 -- Filtros para la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  ADD CONSTRAINT `alumnos_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `autoescuelas`
---
-ALTER TABLE `autoescuelas`
-  ADD CONSTRAINT `autoescuelas_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `autoescuelas_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `alumnos_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `usuarios` (`id_usuario`),
+  ADD CONSTRAINT `alumnos_ibfk_2` FOREIGN KEY (`id_autoescuela`) REFERENCES `autoescuelas` (`id_autoescuela`);
 
 --
 -- Filtros para la tabla `practicas`
 --
 ALTER TABLE `practicas`
-  ADD CONSTRAINT `practicas_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `practicas_ibfk_2` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `practicas_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `profesores` (`id_profesor`);
 
 --
 -- Filtros para la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  ADD CONSTRAINT `profesores_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `usuarios` (`id_usuario`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `profesores_ibfk_1` FOREIGN KEY (`id_profesor`) REFERENCES `usuarios` (`id_usuario`),
+  ADD CONSTRAINT `profesores_ibfk_2` FOREIGN KEY (`id_autoescuela`) REFERENCES `autoescuelas` (`id_autoescuela`);
 
 --
--- Filtros para la tabla `recibe`
+-- Filtros para la tabla `reservas`
 --
-ALTER TABLE `recibe`
-  ADD CONSTRAINT `recibe_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `recibe_ibfk_2` FOREIGN KEY (`id_comunicado`) REFERENCES `comunicados` (`id_comunicado`) ON UPDATE CASCADE;
+ALTER TABLE `reservas`
+  ADD CONSTRAINT `reservas_ibfk_1` FOREIGN KEY (`id_alumno`) REFERENCES `alumnos` (`id_alumno`),
+  ADD CONSTRAINT `reservas_ibfk_2` FOREIGN KEY (`id_practica`) REFERENCES `practicas` (`id_practica`);
+
+--
+-- Filtros para la tabla `comunicados`
+--
+ALTER TABLE `comunicados`
+  ADD CONSTRAINT `comunicados_ibfk_1` FOREIGN KEY (`id_administrador`) REFERENCES `administradores` (`id_administrador`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

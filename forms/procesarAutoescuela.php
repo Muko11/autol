@@ -20,32 +20,39 @@ if (!empty($autoescuela) && !empty($telefono) && !empty($precio) && isset($_POST
         // El ID del profesor ya existe en la tabla, mostrar mensaje de alerta
         header("Location: ../registraAutoescuela.php?registroExitoso=false");
     } else {
-        // El ID del profesor no existe en la tabla, realizar la inserción
-        // Insertar los datos en la tabla profesores
-        $stmt = $bd->prepare("INSERT INTO profesores (id_profesor) VALUES (:id_profesor)");
-        $stmt->bindParam(":id_profesor", $id_profesor);
-        $stmt->execute();
 
+        try {
+            $bd->beginTransaction();
 
-        // Insertar los datos en la tabla autoescuelas
-        $stmt = $bd->prepare("INSERT INTO autoescuelas (nombre, telefono, precio_practica, id_profesor) VALUES (:autoescuela, :telefono, :precio, :id_profesor)");
-        $stmt->bindParam(":autoescuela", $autoescuela);
-        $stmt->bindParam(":telefono", $telefono);
-        $stmt->bindParam(":precio", $precio);
-        $stmt->bindParam(":id_profesor", $id_profesor);
-        $stmt->execute();
+            // Insertar los datos en la tabla autoescuelas
+            $stmt = $bd->prepare("INSERT INTO autoescuelas (nombre, telefono, precio_practica) VALUES (:autoescuela, :telefono, :precio)");
+            $stmt->bindParam(":autoescuela", $autoescuela);
+            $stmt->bindParam(":telefono", $telefono);
+            $stmt->bindParam(":precio", $precio);
+            $stmt->execute();
 
-        // Obtener el ID de la última autoescuela insertada
-        $id_autoescuela = $bd->lastInsertId();
+            // Obtener el ID de la última autoescuela insertada
+            $id_autoescuela = $bd->lastInsertId();
 
-        $administra = "si";
-        // Insertar los datos en la tabla administra
-        $stmt = $bd->prepare("INSERT INTO administra (administrador, id_profesor, id_autoescuela) VALUES (:administrador, :id_profesor, :id_autoescuela)");
-        $stmt->bindParam(":administrador", $administra);
-        $stmt->bindParam(":id_profesor", $id_profesor);
-        $stmt->bindParam(":id_autoescuela", $id_autoescuela);
-        $stmt->execute();
+            // El ID del profesor no existe en la tabla, realizar la inserción
+            // Insertar los datos en la tabla profesores
+            $stmt = $bd->prepare("INSERT INTO profesores (id_profesor, id_autoescuela) VALUES (:id_profesor, :id_autoescuela)");
+            $stmt->bindParam(":id_profesor", $id_profesor);
+            $stmt->bindParam(":id_autoescuela", $id_autoescuela);
+            $stmt->execute();
 
-        header("Location: ../registraAutoescuela.php?registroExitoso=true");
+            // Insertar los datos en la tabla administradores
+            $stmt = $bd->prepare("INSERT INTO administradores (id_profesor, id_autoescuela) VALUES (:id_profesor, :id_autoescuela)");
+            $stmt->bindParam(":id_profesor", $id_profesor);
+            $stmt->bindParam(":id_autoescuela", $id_autoescuela);
+            $stmt->execute();
+
+            $bd->commit();
+
+            header("Location: ../registraAutoescuela.php?registroExitoso=true");
+        } catch (PDOException $e) {
+            $bd->rollBack();
+            echo "Error: " . $e->getMessage();
+        }
     }
 }

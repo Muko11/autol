@@ -2,6 +2,26 @@
 
 ?>
 
+<head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // Obtener el elemento 'a'
+            var navbarBrand = document.querySelector(".navbar-brand");
+
+            // Obtener el nombre de usuario de la sesión
+            var nombreUsuario = "<?php echo $_SESSION['sesion']['nombre']; ?>";
+
+            // Actualizar el contenido del elemento 'a'
+            navbarBrand.innerHTML = nombreUsuario;
+
+            // Poner un subrayado al elemento
+            navbarBrand.style.textDecoration = "underline";
+
+        });
+    </script>
+
+</head>
 <nav id="nav-scroll" class="navbar navbar-expand-lg fixed-top bg-dark">
     <div class="container-fluid">
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

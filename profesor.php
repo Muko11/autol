@@ -1,16 +1,3 @@
-<?php
-include('config/config.php');
-include('./modals/agregarAlumno.php');
-include('./modals/agregarProfesor.php');
-include('./modals/borrarAutoescuela.php');
-include('./modals/borrarComunicado.php');
-include('./modals/borrarRegistro.php');
-include('./modals/editarComunicado.php');
-include('./modals/editarPractica.php');
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -26,7 +13,29 @@ include('./modals/editarPractica.php');
 </head>
 
 <body>
+    <?php
+    session_start();
+    include('config/config.php');
+    include('./modals/agregarAlumno.php');
+    include('./modals/agregarProfesor.php');
+    include('./modals/borrarAutoescuela.php');
+    include('./modals/borrarComunicado.php');
+    include('./modals/borrarRegistro.php');
+    include('./modals/editarComunicado.php');
+    include('./modals/editarPractica.php');
 
+    // Obtener el ID de la autoescuela del usuario de la sesión
+    $id_profesor = $_SESSION['sesion']['id_usuario'];
+    $stmt = $bd->prepare("SELECT id_autoescuela FROM profesores WHERE id_profesor = :id_profesor");
+    $stmt->bindParam(":id_profesor", $id_profesor);
+    $stmt->execute();
+    $profesor = $stmt->fetch();
+
+    // Añadir el ID de la autoescuela a la sesión
+    $_SESSION['sesion']['id_autoescuela'] = $profesor['id_autoescuela'];
+
+
+    ?>
     <div class="container-fluid g-0 mb-5">
         <?php
         include('views/partials/navAutoescuela.php');
@@ -121,7 +130,15 @@ include('./modals/editarPractica.php');
     include('./views/layouts/footer.html');
     ?>
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+
+
+
 </body>
 
 </html>
+
+<?php 
+
+?>

@@ -14,3 +14,30 @@
     </div>
 
 </nav>
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        var activeTab = localStorage.getItem('activeTab');
+        if (activeTab != null) {
+            var tab = new bootstrap.Tab(document.getElementById(activeTab));
+            tab.show();
+        }
+        document.getElementById("tab-autoescuela").addEventListener('shown.bs.tab', function(event) {
+            localStorage.setItem('activeTab', event.target.getAttribute('id'));
+        })
+        document.getElementById("tab-profesor").addEventListener('shown.bs.tab', function(event) {
+            localStorage.setItem('activeTab', event.target.getAttribute('id'));
+        })
+        document.getElementById("tab-alumno").addEventListener('shown.bs.tab', function(event) {
+            localStorage.setItem('activeTab', event.target.getAttribute('id'));
+        })
+        document.getElementById("tab-practica").addEventListener('shown.bs.tab', function(event) {
+            localStorage.setItem('activeTab', event.target.getAttribute('id'));
+        })
+        document.getElementById("tab-comunicado").addEventListener('shown.bs.tab', function(event) {
+            localStorage.setItem('activeTab', event.target.getAttribute('id'));
+        })
+
+    });
+</script>
