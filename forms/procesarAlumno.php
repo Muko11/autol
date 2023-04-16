@@ -53,7 +53,7 @@ if (!empty($correo) && isset($_POST['botonAñadirAlumno'])) {
             }
         } else {
 
-            echo "El alumno ya existe en la tabla de alumnos";
+            echo "El alumno ya pertenece a una autoescuela";
         }
     } else {
 

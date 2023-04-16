@@ -15,7 +15,7 @@
 <body>
     <?php
     session_start();
-    include('config/config.php');
+    require_once "config/config.php";
     include('./modals/agregarAlumno.php');
     include('./modals/agregarProfesor.php');
     include('./modals/borrarAutoescuela.php');

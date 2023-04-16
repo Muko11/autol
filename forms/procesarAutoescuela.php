@@ -25,7 +25,7 @@ if (!empty($autoescuela) && !empty($telefono) && !empty($precio) && isset($_POST
             $bd->beginTransaction();
 
             // Insertar los datos en la tabla autoescuelas
-            $stmt = $bd->prepare("INSERT INTO autoescuelas (nombre, telefono, precio_practica) VALUES (:autoescuela, :telefono, :precio)");
+            $stmt = $bd->prepare("INSERT INTO autoescuelas (nombre, telefono, precio_practica, id_administrador) VALUES (:autoescuela, :telefono, :precio, NULL)");
             $stmt->bindParam(":autoescuela", $autoescuela);
             $stmt->bindParam(":telefono", $telefono);
             $stmt->bindParam(":precio", $precio);
@@ -41,8 +41,8 @@ if (!empty($autoescuela) && !empty($telefono) && !empty($precio) && isset($_POST
             $stmt->bindParam(":id_autoescuela", $id_autoescuela);
             $stmt->execute();
 
-            // Insertar los datos en la tabla administradores
-            $stmt = $bd->prepare("INSERT INTO administradores (id_profesor, id_autoescuela) VALUES (:id_profesor, :id_autoescuela)");
+            // Actualizar la tabla autoescuelas con el ID del administrador
+            $stmt = $bd->prepare("UPDATE autoescuelas SET id_administrador = :id_profesor WHERE id_autoescuela = :id_autoescuela");
             $stmt->bindParam(":id_profesor", $id_profesor);
             $stmt->bindParam(":id_autoescuela", $id_autoescuela);
             $stmt->execute();

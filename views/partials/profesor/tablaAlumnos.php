@@ -6,20 +6,20 @@ require_once "config/config.php";
 
 <!-- <a href="#" data-bs-toggle="modal" data-bs-target="#modalAñadirAlumno"><i class="fa-solid fa-user-plus fa-2x i-añadir"></i></a> -->
 
-
-<form class="mb-5" method="POST" action="forms/procesarAlumno.php">
-    <div class="row row-cols row-cols-md-2">
-        <div class="mb-4">
-            <label for="emailAlumno" class="fw-bold mb-2">Agregar alumno</label>
-            <input type="email" class="form-control" id="emailAlumno" name="emailAlumno" placeholder="Correo del alumno">
+<?php if ($es_administrador) { ?>
+    <form class="mb-5" method="POST" action="forms/procesarAlumno.php">
+        <div class="row row-cols row-cols-md-2">
+            <div class="mb-4">
+                <label for="emailAlumno" class="fw-bold mb-2">Agregar alumno</label>
+                <input type="email" class="form-control" id="emailAlumno" name="emailAlumno" placeholder="Correo del alumno">
+            </div>
         </div>
-    </div>
-    <div>
-        <input class="boton" type="submit" name="botonAñadirAlumno" value="Agregar alumno">
-    </div>
+        <div>
+            <input class="boton" type="submit" name="botonAñadirAlumno" value="Agregar alumno">
+        </div>
 
-</form>
-
+    </form>
+<?php } ?>
 
 <form>
     <div class="my-4">
@@ -34,10 +34,12 @@ require_once "config/config.php";
                 <th scope="col">#</th>
                 <th scope="col">Alumno</th>
                 <th scope="col">Email</th>
-                <th scope="col">Acciones</th>
+                <?php if ($es_administrador) { ?>
+                    <th scope="col">Acciones</th>
+                <?php } ?>
             </tr>
         </thead>
-        <tbody>
+        <tbody id="tablaAlumnos">
             <?php
             $id_autoescuela = $_SESSION['sesion']['id_autoescuela'];
 
@@ -54,10 +56,34 @@ require_once "config/config.php";
                 echo "<th scope='row'>" . ($indice + 1) . "</th>";
                 echo "<td>" . $alumno['nombre'] . " " . $alumno['apellidos'] . "</td>";
                 echo "<td>" . $alumno['correo'] . "</td>";
-                echo "<td><a href='#' data-bs-toggle='modal' data-bs-target='#modalBorrarRegistro'><i class='fa-solid fa-trash fa-2x i-trash'></i></a></td>";
+                if ($es_administrador) {
+                    echo "<td><a href='#' data-bs-toggle='modal' data-bs-target='#modalBorrarRegistro'><i class='fa-solid fa-trash fa-2x i-trash'></i></a></td>";
+                }
                 echo "</tr>";
             }
             ?>
         </tbody>
     </table>
 </div>
+
+<script>
+    // Obtener la tabla de resultados y el campo de búsqueda
+    const tablaAlumnos = document.getElementById("tablaAlumnos");
+    const buscadorAlumno = document.getElementById("buscadorAlumno");
+
+    // Añadir un evento de escucha al campo de búsqueda
+    buscadorAlumno.addEventListener("input", () => {
+        // Obtener el valor del campo de búsqueda
+        const busqueda = buscadorAlumno.value.trim().toLowerCase();
+        // Filtrar la tabla de resultados por el valor de búsqueda
+        const filas = tablaAlumnos.querySelectorAll("tr");
+        filas.forEach((fila) => {
+            const contenido = fila.textContent.toLowerCase();
+            if (contenido.includes(busqueda)) {
+                fila.style.display = "";
+            } else {
+                fila.style.display = "none";
+            }
+        });
+    });
+</script>

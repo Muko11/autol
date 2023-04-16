@@ -1,11 +1,3 @@
-<?php
-include('config/config.php');
-include('./modals/reservarPractica.php');
-include('./modals/cancelarPractica.php');
-
-?>
-
-
 <!DOCTYPE html>
 <html lang="es">
 
@@ -21,6 +13,25 @@ include('./modals/cancelarPractica.php');
 </head>
 
 <body>
+
+    <?php
+    session_start();
+    require_once "config/config.php";
+    include('./modals/reservarPractica.php');
+    include('./modals/cancelarPractica.php');
+
+    // Obtener el ID de la autoescuela del usuario de la sesión
+    $id_alumno = $_SESSION['sesion']['id_usuario'];
+    $stmt = $bd->prepare("SELECT id_autoescuela FROM alumnos WHERE id_alumno = :id_alumno");
+    $stmt->bindParam(":id_alumno", $id_alumno);
+    $stmt->execute();
+    $alumno = $stmt->fetch();
+
+    // Añadir el ID de la autoescuela a la sesión
+    $_SESSION['sesion']['id_autoescuela'] = $alumno['id_autoescuela'];
+
+    ?>
+
     <div class="container-fluid g-0 mb-5">
         <?php
         include('views/partials/navAutoescuela.php');
