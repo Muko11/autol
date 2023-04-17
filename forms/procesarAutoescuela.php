@@ -55,4 +55,6 @@ if (!empty($autoescuela) && !empty($telefono) && !empty($precio) && isset($_POST
             echo "Error: " . $e->getMessage();
         }
     }
+} else {
+    header("Location: ../index.php#oportunidades");
 }

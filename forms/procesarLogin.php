@@ -27,4 +27,6 @@ if (!empty($correo) && !empty($password) && isset($_POST['login'])) {
     } else {
         header("Location: ../login.php?loginExitoso=false");
     }
+} else {
+    header("Location: ../login.php");
 }

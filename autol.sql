@@ -71,10 +71,10 @@ CREATE TABLE `comunicados` (
 
 CREATE TABLE `practicas` (
   `id_profesor` int(11) NOT NULL,
-  `id_alumno` int(11) NOT NULL,
   `fecha` date NOT NULL,
   `hora` time NOT NULL,
-  `tipo` varchar(10) NOT NULL
+  `tipo` varchar(10) NOT NULL,
+  `id_alumno` int(11) NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -145,7 +145,7 @@ ALTER TABLE `comunicados`
 -- Indices de la tabla `practicas`
 --
 ALTER TABLE `practicas`
-  ADD PRIMARY KEY (`id_profesor`, `id_alumno`, `fecha`, `hora`),
+  ADD PRIMARY KEY (`id_profesor`, `fecha`, `hora`),
   ADD KEY `id_profesor` (`id_profesor`),
   ADD KEY `id_alumno` (`id_alumno`);
 

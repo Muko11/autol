@@ -59,4 +59,6 @@ if (!empty($correo) && isset($_POST['botonAñadirProfesor'])) {
 
         echo "El correo no pertenece a un profesor existente";
     }
+} else {
+    header("Location: ../profesor.php");
 }
