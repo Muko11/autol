@@ -35,29 +35,16 @@ if (isset($_GET['registroExitoso'])) {
     </div>
 
     <div class="container formulario">
-        <p class="fs-3">Crear cuenta</p>
-<!--         <p class="text-muted">Crea una cuenta gratuita para acceder a nuestras
-            oportunidades.</p> -->
-        <a href="login.php">¿Ya tienes una cuenta? Inicia
-            sesión</a>
+        <p class="fs-4 text-center">CREAR CUENTA</p>
+
         <form id="formulario-registro" method="POST" action="forms/procesarSingup.php">
-            <div class="form-floating mt-3 mb-3">
-                <input type="text" class="form-control" id="registroNombre" name="nombre" placeholder="Nombre">
-                <label for="registroNombre">Nombre</label>
-            </div>
-            <div class="form-floating mt-3 mb-3">
-                <input type="text" class="form-control" id="registroApellido" name="apellidos" placeholder="Apellidos">
-                <label for="registroApellido">Apellidos</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="registroEmail" name="correo" placeholder="nombre@ejemplo.com">
-                <label for="registroEmail">Correo electrónico</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="registroPassword" name="password" placeholder="Contraseña">
-                <label for="registroPassword">Contraseña</label>
-            </div>
-            <p class="text-start fw-bold">Tipo de cuenta:</p>
+            <input type="text" class="form-control" id="registroNombre" name="nombre" placeholder="Introduzca su nombre"><br>
+            <input type="text" class="form-control" id="registroApellido" name="apellidos" placeholder="Introduzca sus apellidos"><br>
+            <input type="email" class="form-control" id="registroEmail" name="correo" placeholder="nombre@ejemplo.com"><br>
+            <input type="password" class="form-control" id="registroPassword" name="password" placeholder="Contraseña"><br>
+
+
+            <p class="text-start">Tipo de cuenta:</p>
             <div class="btn-group d-flex mb-3" role="group">
                 <input type="radio" class="btn-check" name="rol" id="rol1" checked=checked value="profesor" autocomplete="off">
                 <label class="btn btn-outline-primary" for="rol1">Profesor</label>
@@ -65,18 +52,14 @@ if (isset($_GET['registroExitoso'])) {
                 <input type="radio" class="btn-check" name="rol" id="rol2" value="alumno" autocomplete="off">
                 <label class="btn btn-outline-primary" for="rol2">Alumno</label>
             </div>
-            <div class="d-flex justify-content-center mb-3">
+            <div class="d-grid justify-content-center">
+                <a href="login.php">¿Ya tienes una cuenta? Inicia
+                    sesión</a><br>
                 <input id="submitRegistro" name="registra" class="boton" type="submit" value="Registrarse">
             </div>
         </form>
 
-
-
     </div>
-
-
-
-
 </body>
 
 </html>

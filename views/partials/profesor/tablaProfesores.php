@@ -52,14 +52,14 @@ if (isset($_SESSION['sesion'])) {
             $id_autoescuela = $_SESSION['sesion']['id_autoescuela'];
 
             // Realizar consulta a la base de datos
-            $stmt = $bd->prepare("SELECT u.nombre, u.apellidos, u.correo FROM usuarios u INNER JOIN profesores p ON u.id_usuario = p.id_profesor WHERE p.id_autoescuela = :id_autoescuela");
+            $stmt = $bd->prepare("SELECT u.nombre, u.apellidos, u.correo, p.id_profesor FROM usuarios u INNER JOIN profesores p ON u.id_usuario = p.id_profesor WHERE p.id_autoescuela = :id_autoescuela");
             $stmt->bindParam(":id_autoescuela", $id_autoescuela);
             $stmt->execute();
             $profesores = $stmt->fetchAll();
 
             // Mostrar todos los profesores por defecto
             foreach ($profesores as $indice => $profesor) {
-                echo "<tr>";
+                echo "<tr data-id='" . $profesor['id_profesor'] . "'>";
                 echo "<th scope='row'>" . ($indice + 1) . "</th>";
                 echo "<td>" . $profesor['nombre'] . " " . $profesor['apellidos'] . "</td>";
                 echo "<td>" . $profesor['correo'] . "</td>";
